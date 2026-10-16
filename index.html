@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rainbow Books | Books, Authors and Community</title>
+
+  <style>
+    :root {
+      --purple: #382052;
+      --dark-purple: #21132f;
+      --gold: #e8b94f;
+      --cream: #faf7f1;
+      --white: #ffffff;
+      --ink: #28232f;
+      --muted: #716a79;
+      --line: #e4ddea;
+      --green: #19794e;
+      --red: #a64141;
+      --shadow: 0 8px 25px rgba(56, 32, 82, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behaviour: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--gold);
+      color: var(--dark-purple);
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: bold;
+    }
+
+    header {
+      background: var(--purple);
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, .15);
+    }
+
+    .nav-wrapper {
+      width: min(1180px, 92%);
+      margin: auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 215px;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--dark-purple);
+      background: var(--gold);
+      font-size: .8rem;
+    }
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      min-width: 180px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: none;
+      border-radius: 5px 0 0 5px;
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    .search-box button {
+      border: none;
+      border-radius: 0 5px 5px 0;
+      padding: 0 16px;
+      background: var(--gold);
+      color: var(--dark-purple);
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      white-space: nowrap;
+    }
+
+    nav a,
+    .basket-button {
+      color: var(--white);
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 5px;
+      padding: 8px 11px;
+      font-size: .87rem;
+    }
+
+    nav a:hover,
+    .basket-button:hover {
+      background: rgba(255,255,255,.14);
+    }
+
+    main {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    .hero {
+      min-height: 390px;
+      padding: 72px 8%;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(33,19,47,.94), rgba(56,32,82,.78)),
+        radial-gradient(circle at 80% 30%, #9c77bb, #382052 55%, #21132f);
+      border-radius: 0 0 16px 16px;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .78rem;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 1.08;
+      margin: 13px 0;
+    }
+
+    .hero p {
+      max-width: 590px;
+      font-size: 1.08rem;
+      color: #eee8f2;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 5px;
+      padding: 11px 17px;
+      background: var(--purple);
+      color: var(--white);
+      font-weight: bold;
+    }
+
+    .button:hover {
+      filter: brightness(1.18);
+    }
+
+    .button.gold {
+      color: var(--dark-purple);
+      background: var(--gold);
+    }
+
+    .button.outline {
+      color: var(--purple);
+      background: var(--white);
+      border: 1px solid var(--purple);
+    }
+
+    .button.danger {
+      background: var(--red);
+    }
+
+    .section {
+      padding: 52px 0 20px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      font-family: Georgia, serif;
+      color: var(--purple);
+      font-size: 2rem;
+      margin: 0 0 5px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filter-row select,
+    .filter-row input {
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 10px;
+      background: var(--white);
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .book-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cover {
+      min-height: 190px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: var(--white);
+      font-family: Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .cover.one {
+      background: linear-gradient(135deg, #6f4b91, #28193c);
+    }
+
+    .cover.two {
+      background: linear-gradient(135deg, #bc6b42, #5b2527);
+    }
+
+    .cover.three {
+      background: linear-gradient(135deg, #3d7891, #172b47);
+    }
+
+    .cover.four {
+      background: linear-gradient(135deg, #c59c43, #59401b);
+    }
+
+    .book-info {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .book-info h3 {
+      color: var(--purple);
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+    }
+
+    .author {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: .87rem;
+      margin: 13px 0;
+    }
+
+    .book-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .price {
+      color: var(--purple);
+      font-weight: bold;
+      font-size: 1.08rem;
+    }
+
+    .stock {
+      color: var(--green);
+      background: #e9f7ef;
+      border-radius: 4px;
+      display: inline-block;
+      padding: 4px 7px;
+      margin-top: 9px;
+      font-size: .76rem;
+    }
+
+    .stock.order {
+      color: #9a5a13;
+      background: #fff0dc;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card,
+    .event-card,
+    .author-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3,
+    .event-card h3,
+    .author-card h3 {
+      color: var(--purple);
+      margin-top: 0;
+    }
+
+    .info-card p,
+    .event-card p,
+    .author-card p {
+      color: var(--muted);
+    }
+
+    .event-grid,
+    .author-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .event-date {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark-purple);
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: .8rem;
+      font-weight: bold;
+      margin-bottom: 13px;
+    }
+
+    .author-initial {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      background: var(--purple);
+      color: var(--gold);
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .account-panel {
+      background: #f2edf8;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 25px;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      right: -420px;
+      top: 0;
+      width: min(400px, 92vw);
+      height: 100vh;
+      padding: 24px;
+      background: var(--white);
+      z-index: 20;
+      box-shadow: -5px 0 20px rgba(0,0,0,.2);
+      transition: right .25s ease;
+      overflow-y: auto;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 13px;
+    }
+
+    .cart-header h2 {
+      color: var(--purple);
+      margin: 0;
+    }
+
+    .close-button {
+      border: 0;
+      background: transparent;
+      color: var(--purple);
+      font-size: 1.5rem;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-item strong {
+      color: var(--purple);
+    }
+
+    .cart-item small {
+      display: block;
+      color: var(--muted);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      border-top: 2px solid var(--purple);
+      padding-top: 14px;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .checkout {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      overflow-y: auto;
+      background: rgba(33, 19, 47, .72);
+      padding: 35px 15px;
+    }
+
+    .checkout.show {
+      display: block;
+    }
+
+    .checkout-box {
+      width: min(850px, 100%);
+      margin: auto;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .checkout-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 22px;
+      padding-bottom: 15px;
+    }
+
+    .checkout-header h2 {
+      color: var(--purple);
+      margin: 0;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 25px;
+    }
+
+    .form-panel,
+    .summary-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .form-panel h3,
+    .summary-panel h3 {
+      color: var(--purple);
+      margin-top: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 13px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      font-size: .86rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      border: 1px solid #cfc6d8;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .prototype-warning {
+      background: #fff4dd;
+      border-left: 4px solid var(--gold);
+      padding: 10px;
+      color: #634716;
+      font-size: .82rem;
+      margin: 15px 0;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .summary-total {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--purple);
+      margin-top: 10px;
+    }
+
+    .confirmation {
+      display: none;
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    .confirmation.show {
+      display: block;
+    }
+
+    .confirmation-mark {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--white);
+      font-size: 2rem;
+      margin: auto;
+    }
+
+    .confirmation h2 {
+      color: var(--green);
+    }
+
+    .order-number {
+      background: #edf8f1;
+      color: var(--green);
+      border: 1px solid #b9dfc8;
+      border-radius: 5px;
+      display: inline-block;
+      padding: 9px 13px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .empty-message {
+      color: var(--muted);
+      padding: 20px 0;
+    }
+
+    footer {
+      margin-top: 55px;
+      background: var(--dark-purple);
+      color: var(--white);
+      padding: 35px 4%;
+    }
+
+    .footer-inner {
+      width: min(1180px, 92%);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    footer small {
+      color: #d8cce0;
+    }
+
+    @media (max-width: 900px) {
+      .nav-wrapper {
+        flex-wrap: wrap;
+        padding: 13px 0;
+      }
+
+      .brand {
+        min-width: auto;
+      }
+
+      .search-box {
+        order: 3;
+        flex-basis: 100%;
+      }
+
+      .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      nav {
+        gap: 5px;
+      }
+
+      nav a {
+        display: none;
+      }
+
+      .hero {
+        padding: 50px 7%;
+      }
+
+      .book-grid,
+      .info-grid,
+      .event-grid,
+      .author-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement">
+    Free standard delivery on orders over $60 — Discover your next great read.
+  </div>
+
+  <header>
+    <div class="nav-wrapper">
+      <div class="brand">
+        <div class="brand-mark">RB</div>
+        Rainbow Books
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="search"
+               placeholder="Search books, authors or categories"
+               aria-label="Search books">
+        <button onclick="searchBooks()">Search</button>
+      </div>
+
+      <nav>
+        <a href="#books">Books</a>
+        <a href="#events">Events</a>
+        <a href="#authors">Authors</a>
+        <a href="#account">Account</a>
+        <button class="basket-button" onclick="openCart()">
+          Basket (<span id="basketCount">0</span>)
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">Books at the end of the rainbow</div>
+        <h1>Find stories worth coming back to.</h1>
+        <p>
+          Explore trusted recommendations, discover Australian authors and
+          connect with your local Rainbow Books community.
+        </p>
+        <a class="button gold" href="#books">Browse books</a>
+      </div>
+    </section>
+
+    <section class="section" id="books">
+      <div class="section-heading">
+        <div>
+          <h2>Featured books</h2>
+          <p>Browse selected titles and check availability across Rainbow Books.</p>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <input id="categoryFilter" type="text"
+               placeholder="Filter by category"
+               oninput="filterBooks()">
+
+        <select id="availabilityFilter" onchange="filterBooks()">
+          <option value="all">All availability</option>
+          <option value="stock">In stock</option>
+          <option value="order">Available to order</option>
+        </select>
+
+        <button class="button outline" onclick="resetFilters()">Reset filters</button>
+      </div>
+
+      <div class="book-grid" id="bookGrid">
+
+        <article class="book-card"
+                 data-title="The River Beyond"
+                 data-author="Veronica Watson"
+                 data-category="fiction australian">
+          <div class="cover one">THE<br>RIVER<br>BEYOND</div>
+          <div class="book-info">
+            <h3>The River Beyond</h3>
+            <div class="author">Veronica Watson</div>
+            <p class="description">
+              A reflective Australian novel about memory, family and belonging.
+            </p>
+            <span class="stock">In stock — Collins Street</span>
+            <div class="book-footer">
+              <span class="price">$29.95</span>
+              <button class="button" onclick="addToCart('The River Beyond', 29.95)">
+                Add to basket
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="book-card"
+                 data-title="The Australian Story"
+                 data-author="M. J. Carter"
+                 data-category="history australian">
+          <div class="cover two">THE<br>AUSTRALIAN<br>STORY</div>
+          <div class="book-info">
+            <h3>The Australian Story</h3>
+            <div class="author">M. J. Carter</div>
+            <p class="description">
+              A richly illustrated introduction to Australia's changing society.
+            </p>
+            <span class="stock">In stock — 4 locations</span>
+            <div class="book-footer">
+              <span class="price">$24.95</span>
+              <button class="button" onclick="addToCart('The Australian Story', 24.95)">
+                Add to basket
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="book-card"
+                 data-title="Introduction to Design"
+                 data-author="Lena Howard"
+                 data-category="design study">
+          <div class="cover three">INTRODUCTION<br>TO DESIGN</div>
+          <div class="book-info">
+            <h3>Introduction to Design</h3>
+            <div class="author">Lena Howard</div>
+            <p class="description">
+              A practical guide to creative thinking, systems and visual design.
+            </p>
+            <span class="stock order">Available to order</span>
+            <div class="book-footer">
+              <span class="price">$54.95</span>
+              <button class="button" onclick="addToCart('Introduction to Design', 54.95)">
+                Add to basket
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="book-card"
+                 data-title="The Garden of Small Things"
+                 data-author="Amelia Reed"
+                 data-category="children fiction">
+          <div class="cover four">THE GARDEN<br>OF SMALL<br>THINGS</div>
+          <div class="book-info">
+            <h3>The Garden of Small Things</h3>
+            <div class="author">Amelia Reed</div>
+            <p class="description">
+              A warm illustrated story for younger readers and their families.
+            </p>
+            <span class="stock">In stock — Bayswater</span>
+            <div class="book-footer">
+              <span class="price">$19.95</span>
+              <button class="button" onclick="addToCart('The Garden of Small Things', 19.95)">
+                Add to basket
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <h2>Why Rainbow Books?</h2>
+          <p>More than a transaction: a place to discover, discuss and enjoy books.</p>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h3>Knowledgeable recommendations</h3>
+          <p>
+            Our team helps customers find books suited to their interests,
+            reading level and occasion.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Local store experiences</h3>
+          <p>
+            Visit author events, book clubs and community activities at selected
+            Rainbow Books locations.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Australian publishing</h3>
+          <p>
+            Discover new voices and support authors connected with Rainbow Books
+            Publishing.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="events">
+      <div class="section-heading">
+        <div>
+          <h2>Events and community</h2>
+          <p>Meet authors, share recommendations and connect with other readers.</p>
+        </div>
+      </div>
+
+      <div class="event-grid">
+        <article class="event-card">
+          <span class="event-date">18 OCTOBER · COLLINS STREET</span>
+          <h3>Meet Veronica Watson</h3>
+          <p>Author discussion and signing for The River Beyond.</p>
+          <button class="button outline"
+                  onclick="registerEvent('Meet Veronica Watson')">
+            Register interest
+          </button>
+        </article>
+
+        <article class="event-card">
+          <span class="event-date">25 OCTOBER · BAYSWATER</span>
+          <h3>Young Readers Afternoon</h3>
+          <p>Stories, activities and recommendations for children aged 7–12.</p>
+          <button class="button outline"
+                  onclick="registerEvent('Young Readers Afternoon')">
+            Register interest
+          </button>
+        </article>
+
+        <article class="event-card">
+          <span class="event-date">2 NOVEMBER · ONLINE</span>
+          <h3>Australian Publishing Today</h3>
+          <p>A discussion about new authors, digital books and publishing.</p>
+          <button class="button outline"
+                  onclick="registerEvent('Australian Publishing Today')">
+            Register interest
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="authors">
+      <div class="section-heading">
+        <div>
+          <h2>Meet our authors</h2>
+          <p>Explore writers and titles from Rainbow Books Publishing.</p>
+        </div>
+      </div>
+
+      <div class="author-grid">
+        <article class="author-card">
+          <div class="author-initial">VW</div>
+          <h3>Veronica Watson</h3>
+          <p>
+            A successful Rainbow Books author whose work explores Australian
+            identity, relationships and place.
+          </p>
+          <button class="button outline"
+                  onclick="showMessage('Author profile opened for Veronica Watson.')">
+            View profile
+          </button>
+        </article>
+
+        <article class="author-card">
+          <div class="author-initial">JC</div>
+          <h3>Jonathan Croft</h3>
+          <p>
+            An established author whose publications are supported through
+            editing and production services.
+          </p>
+          <button class="button outline"
+                  onclick="showMessage('Author profile opened for Jonathan Croft.')">
+            View profile
+          </button>
+        </article>
+
+        <article class="author-card">
+          <div class="author-initial">AR</div>
+          <h3>Amelia Reed</h3>
+          <p>
+            A children’s author creating engaging stories for young readers and
+            families.
+          </p>
+          <button class="button outline"
+                  onclick="showMessage('Author profile opened for Amelia Reed.')">
+            View profile
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="account">
+      <div class="account-panel">
+        <h2>Rainbow Books account</h2>
+        <p>
+          Sign in to view order history, save recommendations, manage event
+          registrations and collect loyalty points.
+        </p>
+        <button class="button"
+                onclick="showMessage('Account sign-in prototype selected.')">
+          Sign in
+        </button>
+        <button class="button outline"
+                onclick="showMessage('Account registration prototype selected.')">
+          Create account
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Shopping basket -->
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h2>Your basket</h2>
+      <button class="close-button" onclick="closeCart()" aria-label="Close basket">
+        ×
+      </button>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+
+    <button class="button gold"
+            style="width:100%; margin-top:18px;"
+            onclick="openCheckout()">
+      Proceed to checkout
+    </button>
+  </aside>
+
+  <!-- Checkout modal -->
+  <div class="checkout" id="checkoutModal">
+    <div class="checkout-box">
+
+      <div id="checkoutForm">
+        <div class="checkout-header">
+          <h2>Rainbow Books checkout</h2>
+          <button class="close-button" onclick="closeCheckout()">×</button>
+        </div>
+
+        <div class="checkout-grid">
+          <div class="form-panel">
+            <h3>Delivery details</h3>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input id="firstName" type="text" placeholder="Alex">
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input id="lastName" type="text" placeholder="Morgan">
+              </div>
+
+              <div class="form-group full">
+                <label for="email">Email address</label>
+                <input id="email" type="email" placeholder="alex@example.com">
+              </div>
+
+              <div class="form-group full">
+                <label for="address">Delivery address</label>
+                <input id="address" type="text" placeholder="123 Example Street">
+              </div>
+
+              <div class="form-group">
+                <label for="suburb">Suburb</label>
+                <input id="suburb" type="text" placeholder="Melbourne">
+              </div>
+
+              <div class="form-group">
+                <label for="postcode">Postcode</label>
+                <input id="postcode" type="text" placeholder="3000">
+              </div>
+
+              <div class="form-group full">
+                <label for="deliveryMethod">Delivery method</label>
+                <select id="deliveryMethod">
+                  <option>Standard delivery — $7.95</option>
+                  <option>Express delivery — $14.95</option>
+                  <option>Click and collect — Free</option>
+                </select>
+              </div>
+            </div>
+
+            <h3>Payment details</h3>
+
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="cardName">Name on card</label>
+                <input id="cardName" type="text" placeholder="Prototype field">
+              </div>
+
+              <div class="form-group full">
+                <label for="cardNumber">Card number</label>
+                <input id="cardNumber" type="text"
+                       placeholder="Do not enter real card details">
+              </div>
+
+              <div class="form-group">
+                <label for="expiry">Expiry date</label>
+                <input id="expiry" type="text" placeholder="MM/YY">
+              </div>
+
+              <div class="form-group">
+                <label for="cvv">Security code</label>
+                <input id="cvv" type="text" placeholder="CVV">
+              </div>
+            </div>
+
+            <div class="prototype-warning">
+              This is a non-functional assessment prototype. Payment details are
+              not authenticated or stored. Do not enter real credit-card details.
+            </div>
+
+            <button class="button gold"
+                    style="width:100%;"
+                    onclick="placeOrder()">
+              Place prototype order
+            </button>
+          </div>
+
+          <div class="summary-panel">
+            <h3>Order summary</h3>
+            <div id="checkoutSummary"></div>
+
+            <div class="summary-line">
+              <span>Delivery</span>
+              <span>$7.95</span>
+            </div>
+
+            <div class="summary-line summary-total">
+              <span>Total</span>
+              <span id="checkoutTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="confirmation" id="confirmation">
+        <div class="confirmation-mark">✓</div>
+        <h2>Order received</h2>
+        <p>Thank you. Your prototype order has been recorded.</p>
+        <div class="order-number" id="orderNumber"></div>
+        <p>
+          In a live system, an email confirmation and delivery-tracking link
+          would now be sent to the customer.
+        </p>
+        <button class="button" onclick="closeCheckout()">
+          Return to website
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>Rainbow Books</strong><br>
+        <small>Books at the end of the rainbow.</small>
+      </div>
+
+      <div>
+        <small>
+          Prototype website developed for the Digital Design and Business
+          Innovation learning portfolio.
+        </small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          name: name,
+          price: price,
+          quantity: 1
+        });
+      }
+
+      updateCart();
+      showMessage(name + " was added to your basket.");
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      const basketCount = document.getElementById("basketCount");
+      const cartTotal = document.getElementById("cartTotal");
+
+      const quantity = cart.reduce((total, item) => total + item.quantity, 0);
+      const total = cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0);
+
+      basketCount.textContent = quantity;
+      cartTotal.textContent = "$" + total.toFixed(2);
+
+      if (cart.length === 0) {
+        cartItems.innerHTML =
+          '<p class="empty-message">Your basket is currently empty.</p>';
+        return;
+      }
+
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div>
+            <strong>${item.name}</strong>
+            <small>Quantity: ${item.quantity}</small>
+            <small>${(item.price * item.quantity).toFixed(2)}</small>
+          </div>
+          <button class="button danger"
+                  onclick="removeFromCart((item.price * item.quantity).toFixed(2)}</small>
+          </div>
+          <button class="button danger"
+                  onclick="removeFromCart(${index})">
+            Remove
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function openCart() {
+      document.getElementById("cartDrawer").classList.add("open");
+    }
+
+    function closeCart() {
+      document.getElementById("cartDrawer").classList.remove("open");
+    }
+
+    function openCheckout() {
+      if (cart.length === 0) {
+        showMessage("Please add a book to your basket before checking out.");
+        return;
+      }
+
+      closeCart();
+      updateCheckoutSummary();
+      document.getElementById("checkoutModal").classList.add("show");
+      document.getElementById("checkoutForm").style.display = "block";
+      document.getElementById("confirmation").classList.remove("show");
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkoutModal").classList.remove("show");
+    }
+
+    function updateCheckoutSummary() {
+      const summary = document.getElementById("checkoutSummary");
+      const subtotal = cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0);
+      const total = subtotal + 7.95;
+
+      summary.innerHTML = cart.map(item => `
+        <div class="summary-line">
+          <span>index})">
+            Remove
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function openCart() {
+      document.getElementById("cartDrawer").classList.add("open");
+    }
+
+    function closeCart() {
+      document.getElementById("cartDrawer").classList.remove("open");
+    }
+
+    function openCheckout() {
+      if (cart.length === 0) {
+        showMessage("Please add a book to your basket before checking out.");
+        return;
+      }
+
+      closeCart();
+      updateCheckoutSummary();
+      document.getElementById("checkoutModal").classList.add("show");
+      document.getElementById("checkoutForm").style.display = "block";
+      document.getElementById("confirmation").classList.remove("show");
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkoutModal").classList.remove("show");
+    }
+
+    function updateCheckoutSummary() {
+      const summary = document.getElementById("checkoutSummary");
+      const subtotal = cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0);
+      const total = subtotal + 7.95;
+
+      summary.innerHTML = cart.map(item => `
+        <div class="summary-line">
+          <span>${item.name} × item.name} × ${item.quantity}</span>
+          <span>item.quantity}</span>
+          <span>${(item.price * item.quantity).toFixed(2)}</span>
+        </div>
+      `).join("");
+
+      document.getElementById("checkoutTotal").textContent =
+        "item.price * item.quantity).toFixed(2)}</span>
+        </div>
+      `).join("");
+
+      document.getElementById("checkoutTotal").textContent =
+        "$" + total.toFixed(2);
+    }
+
+    function placeOrder()  + total.toFixed(2);
+    }
+
+    function placeOrder() {
+      if (cart.length === 0) {
+        showMessage("Your basket is empty.");
+        return;
+      }
+
+      const orderCode = "RB-" + Math.floor(100000 + Math.random() * 900000);
+
+      document.getElementById("orderNumber").textContent =
+        "Prototype order number: " + orderCode;
+
+      document.getElementById("checkoutForm").style.display = "none";
+      document.getElementById("confirmation").classList.add("show");
+
+      cart = [];
+      updateCart();
+    }
+
+    function registerEvent(eventName) {
+      showMessage(
+        "Your interest in '" + eventName +
+        "' has been recorded in this prototype."
+      );
+    }
+
+    function showMessage(message) {
+      window.alert(message);
+    }
+
+    function searchBooks() {
+      const query = document.getElementById("searchInput").value
+        .toLowerCase()
+        .trim();
+
+      const cards = document.querySelectorAll(".book-card");
+
+      cards.forEach(card => {
+        const text = (
+          card.dataset.title + " " +
+          card.dataset.author + " " +
+          card.dataset.category
+        ).toLowerCase();
+
+        card.style.display = text.includes(query) ? "flex" : "none";
+      });
+
+      document.getElementById("books").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    function filterBooks() {
+      const category = document.getElementById("categoryFilter").value
+        .toLowerCase()
+        .trim();
+
+      const availability =
+        document.getElementById("availabilityFilter").value;
+
+      const cards = document.querySelectorAll(".book-card");
+
+      cards.forEach(card => {
+        const categoryMatch =
+          category === "" ||
+          card.dataset.category.toLowerCase().includes(category);
+
+        const stockText =
+          card.querySelector(".stock").classList.contains("order")
+            ? "order"
+            : "stock";
+
+        const availabilityMatch =
+          availability === "all" || availability === stockText;
+
+        card.style.display =
+          categoryMatch && availabilityMatch ? "flex" : "none";
+      });
+    }
+
+    function resetFilters() {
+      document.getElementById("categoryFilter").value = "";
+      document.getElementById("availabilityFilter").value = "all";
+
+      document.querySelectorAll(".book-card").forEach(card => {
+        card.style.display = "flex";
+      });
+    }
+
+    updateCart();
+  </script>
+
+</body>
+</html>      if (cart.length === 0) {
+        showMessage("Your basket is empty.");
+        return;
+      }
+
+      const orderCode = "RB-" + Math.floor(100000 + Math.random() * 900000);
+
+      document.getElementById("orderNumber").textContent =
+        "Prototype order number: " + orderCode;
+
+      document.getElementById("checkoutForm").style.display = "none";
+      document.getElementById("confirmation").classList.add("show");
+
+      cart = [];
+      updateCart();
+    }
+
+    function registerEvent(eventName) {
+      showMessage(
+        "Your interest in '" + eventName +
+        "' has been recorded in this prototype."
+      );
+    }
+
+    function showMessage(message) {
+      window.alert(message);
+    }
+
+    function searchBooks() {
+      const query = document.getElementById("searchInput").value
+        .toLowerCase()
+        .trim();
+
+      const cards = document.querySelectorAll(".book-card");
+
+      cards.forEach(card => {
+        const text = (
+          card.dataset.title + " " +
+          card.dataset.author + " " +
+          card.dataset.category
+        ).toLowerCase();
+
+        card.style.display = text.includes(query) ? "flex" : "none";
+      });
+
+      document.getElementById("books").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    function filterBooks() {
+      const category = document.getElementById("categoryFilter").value
+        .toLowerCase()
+        .trim();
+
+      const availability =
+        document.getElementById("availabilityFilter").value;
+
+      const cards = document.querySelectorAll(".book-card");
+
+      cards.forEach(card => {
+        const categoryMatch =
+          category === "" ||
+          card.dataset.category.toLowerCase().includes(category);
+
+        const stockText =
+          card.querySelector(".stock").classList.contains("order")
+            ? "order"
+            : "stock";
+
+        const availabilityMatch =
+          availability === "all" || availability === stockText;
+
+        card.style.display =
+          categoryMatch && availabilityMatch ? "flex" : "none";
+      });
+    }
+
+    function resetFilters() {
+      document.getElementById("categoryFilter").value = "";
+      document.getElementById("availabilityFilter").value = "all";
+
+      document.querySelectorAll(".book-card").forEach(card => {
+        card.style.display = "flex";
+      });
+    }
+
+    updateCart();
+  </script>
+
+</body>
+</html>
